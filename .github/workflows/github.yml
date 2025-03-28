@@ -1,9 +1,9 @@
-name: Deploy HTML to On-Prem Server
+name: Deploy HTML to On-Prem Server (Apache2)
 
 on:
   push:
     branches:
-      - master  # Trigger the workflow on push to the main branch
+      - master
 
 jobs:
   deploy:
@@ -13,16 +13,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
+      - name: Set up SSH Agent
+        uses: webfactory/ssh-agent@v0.4.1
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "Starting Deployment..."
-            rm -rf /var/www/html/*
-            cp -r * /var/www/html/
-            chmod -R 755 /var/www/html/
-            systemctl restart nginx  # Change to `apache2` if using Apache
-            echo "Deployment Completed!"
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add SSH Host Key (Temporary Fix)
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy HTML to /var/www/html/
+        run: |
+          rsync -avz --delete ./ ubuntu@${{ secrets.SERVER_IP }}:/var/www/html/
+          ssh ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
+            sudo chown -R www-data:www-data /var/www/html/
+            sudo chmod -R 755 /var/www/html/
+            sudo systemctl restart apache2
+            echo "HTML Deployment to Apache2 Completed!"
+          EOF
