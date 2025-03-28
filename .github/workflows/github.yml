@@ -26,8 +26,8 @@ jobs:
 
       - name: Deploy HTML to /var/www/html/
         run: |
-          sudo rsync -avz --delete ./ ubuntu@${{ secrets.SERVER_IP }}:/var/www/html/
-          ssh ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
+          sudo rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@${{ secrets.SERVER_IP }}:/var/www/html/
+          ssh -o StrictHostKeyChecking=no  ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
             sudo chown -R www-data:www-data /var/www/html/
             sudo chmod -R 755 /var/www/html/
             sudo systemctl restart apache2
