@@ -28,7 +28,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
             if [ ! -d "/var/www/html/.git" ]; then
-              sudo rm -rf /var/www/html
+              # sudo rm -rf /var/www/html
               sudo git clone https://github.com/Akhil-132/food.git /var/www/html
             else
               cd /var/www/html
