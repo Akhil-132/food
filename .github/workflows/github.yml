@@ -29,13 +29,11 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
             if [ ! -d "/var/www/html/.git" ]; then
               sudo rm -rf /var/www/html
-              git clone https://github.com/Akhil-132/food.git /var/www/html
+              sudo git clone https://github.com/Akhil-132/food.git /var/www/html
             else
               cd /var/www/html
               sudo git pull origin master
             fi
-            sudo chown -R www-data:www-data /var/www/html/
-            sudo chmod -R 755 /var/www/html/
             sudo systemctl restart apache2
             echo "HTML Deployment to Apache2 Completed!"
           EOF
