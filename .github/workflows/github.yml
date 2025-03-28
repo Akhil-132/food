@@ -26,7 +26,7 @@ jobs:
 
       - name: Deploy HTML to /var/www/html/
         run: |
-          rsync -avz --delete ./ ubuntu@${{ secrets.SERVER_IP }}:/var/www/html/
+          sudo rsync -avz --delete ./ ubuntu@${{ secrets.SERVER_IP }}:/var/www/html/
           ssh ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
             sudo chown -R www-data:www-data /var/www/html/
             sudo chmod -R 755 /var/www/html/
