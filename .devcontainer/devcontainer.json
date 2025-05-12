@@ -1,0 +1,14 @@
+{
+  "name": "HTML/CSS/JS Development Environment",
+  "extensions": [
+    "dbaeumer.vscode-eslint",  // For JavaScript linting
+    "esbenp.prettier-vscode",  // For code formatting
+    "vscode.html-css"          // For HTML and CSS support
+  ],
+  "settings": {
+    "editor.formatOnSave": true,  // Auto format code on save
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "workspaceFolder": "/workspace",
+  "appPort": [8000]  // If you’re running a local server (optional)
+}
