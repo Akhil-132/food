@@ -9,6 +9,6 @@
     "editor.formatOnSave": true,  // Auto format code on save
     "terminal.integrated.shell.linux": "/bin/bash"
   },
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/",
   "appPort": [8000]  // If you’re running a local server (optional)
 }
