@@ -16,4 +16,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.CROSS_REPO_TOKEN }}" \
             https://api.github.com/repos/Akhil-132/Res/dispatches \
-            -d '{"event_type":"run-selenium"}'
+            -d '{"event_type":"food-commit"}'
