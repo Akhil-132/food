@@ -42,12 +42,11 @@ jobs:
       # 6️⃣ Run Selenium tests from Repo A
       - name: Run Selenium tests
         run: |
-          source venv/bin/activate
-          python tests/db.py --headless
+          source venv/bin/activate && python tests/db.py --headless
 
       # 7️⃣ Upload artifacts
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
         with:
           name: sand-report
-          path: tests/sand_report_*/
+          path: assets/
